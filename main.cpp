@@ -11,7 +11,7 @@ int main()
     //scanf("%d", &c);
     printf("%d", c);
     
-    printf("гоюл");
+    printf("О©╫О©╫О©╫О©╫");
 
 
 

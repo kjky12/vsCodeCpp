@@ -9,7 +9,7 @@
       "command": "g++",
       "args": [
           "-g",
-          "main.cpp"
+          "Programmers_42576.cpp"
       ],
       "group": {
           "kind": "build",
