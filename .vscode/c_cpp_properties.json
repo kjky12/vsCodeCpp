@@ -2,7 +2,7 @@
         "configurations": [
         {
             "name": "Win32",
-            "intelliSenseMode": "clang-x64",
+            "intelliSenseMode": "clang-x82",
             "compilerPath": "C:/MinGW/bin/g++.exe",
             "includePath": [
                 "${workspaceRoot}"
@@ -21,7 +21,7 @@
                 "databaseFilename": ""
             },
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++11"
         }
     ],
     "version": 4

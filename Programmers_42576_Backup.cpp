@@ -1,14 +1,14 @@
-//! Ãâ·Â »ç¿ë
+//! ì¶œë ¥ ì‚¬ìš©
 #include <iostream>
 
-//! ¹®ÀÚ¿­ »ç¿ë
+//! ë¬¸ìì—´ ì‚¬ìš©
 #include "string"
-//! ¹®ÀÚ¿­ ÇÔ¼ö »ç¿ë
+//! ë¬¸ìì—´ í•¨ìˆ˜ ì‚¬ìš©
 #include "string.h"
 
 #include "algorithm"
 
-//! ¹éÅÍ »ç¿ë
+//! ë°±í„° ì‚¬ìš©
 #include <vector>
 
 using namespace std;
@@ -16,15 +16,15 @@ using namespace std;
 /*
 URL : https://programmers.co.kr/learn/courses/30/lessons/42576
 
-¹®Á¦ ¼³¸í
-¼ö¸¹Àº ¸¶¶óÅæ ¼±¼öµéÀÌ ¸¶¶óÅæ¿¡ Âü¿©ÇÏ¿´½À´Ï´Ù. ´Ü ÇÑ ¸íÀÇ ¼±¼ö¸¦ Á¦¿ÜÇÏ°í´Â ¸ğµç ¼±¼ö°¡ ¸¶¶óÅæÀ» ¿ÏÁÖÇÏ¿´½À´Ï´Ù.
-¸¶¶óÅæ¿¡ Âü¿©ÇÑ ¼±¼öµéÀÇ ÀÌ¸§ÀÌ ´ã±ä ¹è¿­ participant¿Í ¿ÏÁÖÇÑ ¼±¼öµéÀÇ ÀÌ¸§ÀÌ ´ã±ä ¹è¿­ completionÀÌ ÁÖ¾îÁú ¶§, ¿ÏÁÖÇÏÁö ¸øÇÑ ¼±¼öÀÇ ÀÌ¸§À» return ÇÏµµ·Ï solution ÇÔ¼ö¸¦ ÀÛ¼ºÇØÁÖ¼¼¿ä.
+ë¬¸ì œ ì„¤ëª…
+ìˆ˜ë§ì€ ë§ˆë¼í†¤ ì„ ìˆ˜ë“¤ì´ ë§ˆë¼í†¤ì— ì°¸ì—¬í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¨ í•œ ëª…ì˜ ì„ ìˆ˜ë¥¼ ì œì™¸í•˜ê³ ëŠ” ëª¨ë“  ì„ ìˆ˜ê°€ ë§ˆë¼í†¤ì„ ì™„ì£¼í•˜ì˜€ìŠµë‹ˆë‹¤.
+ë§ˆë¼í†¤ì— ì°¸ì—¬í•œ ì„ ìˆ˜ë“¤ì˜ ì´ë¦„ì´ ë‹´ê¸´ ë°°ì—´ participantì™€ ì™„ì£¼í•œ ì„ ìˆ˜ë“¤ì˜ ì´ë¦„ì´ ë‹´ê¸´ ë°°ì—´ completionì´ ì£¼ì–´ì§ˆ ë•Œ, ì™„ì£¼í•˜ì§€ ëª»í•œ ì„ ìˆ˜ì˜ ì´ë¦„ì„ return í•˜ë„ë¡ solution í•¨ìˆ˜ë¥¼ ì‘ì„±í•´ì£¼ì„¸ìš”.
 
-Á¦ÇÑ»çÇ×
-¸¶¶óÅæ °æ±â¿¡ Âü¿©ÇÑ ¼±¼öÀÇ ¼ö´Â 1¸í ÀÌ»ó 100,000¸í ÀÌÇÏÀÔ´Ï´Ù.
-completionÀÇ ±æÀÌ´Â participantÀÇ ±æÀÌº¸´Ù 1 ÀÛ½À´Ï´Ù.
-Âü°¡ÀÚÀÇ ÀÌ¸§Àº 1°³ ÀÌ»ó 20°³ ÀÌÇÏÀÇ ¾ËÆÄºª ¼Ò¹®ÀÚ·Î ÀÌ·ç¾îÁ® ÀÖ½À´Ï´Ù.
-Âü°¡ÀÚ Áß¿¡´Â µ¿¸íÀÌÀÎÀÌ ÀÖÀ» ¼ö ÀÖ½À´Ï´Ù.
+ì œí•œì‚¬í•­
+ë§ˆë¼í†¤ ê²½ê¸°ì— ì°¸ì—¬í•œ ì„ ìˆ˜ì˜ ìˆ˜ëŠ” 1ëª… ì´ìƒ 100,000ëª… ì´í•˜ì…ë‹ˆë‹¤.
+completionì˜ ê¸¸ì´ëŠ” participantì˜ ê¸¸ì´ë³´ë‹¤ 1 ì‘ìŠµë‹ˆë‹¤.
+ì°¸ê°€ìì˜ ì´ë¦„ì€ 1ê°œ ì´ìƒ 20ê°œ ì´í•˜ì˜ ì•ŒíŒŒë²³ ì†Œë¬¸ìë¡œ ì´ë£¨ì–´ì ¸ ìˆìŠµë‹ˆë‹¤.
+ì°¸ê°€ì ì¤‘ì—ëŠ” ë™ëª…ì´ì¸ì´ ìˆì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 participant 
 [leo, kiki, eden]
@@ -37,15 +37,15 @@ completion
 [stanko, ana, mislav]	
 
 
-ÀÔÃâ·Â ¿¹ ¼³¸í
-¿¹Á¦ #1
-leo´Â Âü¿©ÀÚ ¸í´Ü¿¡´Â ÀÖÁö¸¸, ¿ÏÁÖÀÚ ¸í´Ü¿¡´Â ¾ø±â ¶§¹®¿¡ ¿ÏÁÖÇÏÁö ¸øÇß½À´Ï´Ù.
+ì…ì¶œë ¥ ì˜ˆ ì„¤ëª…
+ì˜ˆì œ #1
+leoëŠ” ì°¸ì—¬ì ëª…ë‹¨ì—ëŠ” ìˆì§€ë§Œ, ì™„ì£¼ì ëª…ë‹¨ì—ëŠ” ì—†ê¸° ë•Œë¬¸ì— ì™„ì£¼í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.
 
-¿¹Á¦ #2
-vinko´Â Âü¿©ÀÚ ¸í´Ü¿¡´Â ÀÖÁö¸¸, ¿ÏÁÖÀÚ ¸í´Ü¿¡´Â ¾ø±â ¶§¹®¿¡ ¿ÏÁÖÇÏÁö ¸øÇß½À´Ï´Ù.
+ì˜ˆì œ #2
+vinkoëŠ” ì°¸ì—¬ì ëª…ë‹¨ì—ëŠ” ìˆì§€ë§Œ, ì™„ì£¼ì ëª…ë‹¨ì—ëŠ” ì—†ê¸° ë•Œë¬¸ì— ì™„ì£¼í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.
 
-¿¹Á¦ #3
-mislav´Â Âü¿©ÀÚ ¸í´Ü¿¡´Â µÎ ¸íÀÌ ÀÖÁö¸¸, ¿ÏÁÖÀÚ ¸í´Ü¿¡´Â ÇÑ ¸í¹Û¿¡ ¾ø±â ¶§¹®¿¡ ÇÑ¸íÀº ¿ÏÁÖÇÏÁö ¸øÇß½À´Ï´Ù.
+ì˜ˆì œ #3
+mislavëŠ” ì°¸ì—¬ì ëª…ë‹¨ì—ëŠ” ë‘ ëª…ì´ ìˆì§€ë§Œ, ì™„ì£¼ì ëª…ë‹¨ì—ëŠ” í•œ ëª…ë°–ì— ì—†ê¸° ë•Œë¬¸ì— í•œëª…ì€ ì™„ì£¼í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.
 
 
 
@@ -62,13 +62,13 @@ int main()
 
     ///////////////////////////////////////////////
     //Case 1
-    // const int nTmp1 = 3;
-    // string strTmp1[nTmp1] = {"leo", "kiki", "eden"};
-    // participant.assign(strTmp1, strTmp1+nTmp1);
+    const int nTmp1 = 3;
+    string strTmp1[nTmp1] = {"leo", "kiki", "eden"};
+    participant.assign(strTmp1, strTmp1+nTmp1);
 
-    // const int nTmp2 = 2;
-    // string strTmp2[nTmp2] = {"eden", "kiki"};
-    // completion.assign(strTmp2, strTmp2+nTmp2);
+    const int nTmp2 = 2;
+    string strTmp2[nTmp2] = {"eden", "kiki"};
+    completion.assign(strTmp2, strTmp2+nTmp2);
 
     ////////////////////////////////////////////////
     //Case 2
@@ -83,14 +83,14 @@ int main()
 
     ////////////////////////////////////////////////
     //Case 2
-    const int nTmp1 = 4;
+/*     const int nTmp1 = 4;
     string strTmp1[nTmp1] = {"mislav", "stanko", "mislav", "ana"};
     participant.assign(strTmp1, strTmp1+nTmp1);
 
     const int nTmp2 = 3;
     string strTmp2[nTmp2] = {"stanko", "ana", "mislav"};
     completion.assign(strTmp2, strTmp2+nTmp2);
- 
+ */
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
 /*     for (size_t i = 0; i < participant.size(); i++)
@@ -107,34 +107,30 @@ int main()
     
     string answer = "";
 
-    	sort(participant.begin(), participant.end());
-	sort(completion.begin(), completion.end());
+    sort(participant.begin(), participant.end());
+    sort(completion.begin(), completion.end());
 
 
-	int nIdx = 0;
 	for (vector<string>::const_iterator iterParti = participant.begin(); iterParti != participant.end(); iterParti++)
 	{
 		bool bFlag = false;
+		int nIdx = 0;
 
-		vector<string>::const_iterator itercompl = completion.begin() + nIdx;
-		while (itercompl != completion.end())
-		{
-			nIdx++;
-
+	    for (vector<string>::const_iterator itercompl = completion.begin(); itercompl != completion.end(); itercompl++)
+	    {
 			if (*iterParti == *itercompl)
 			{
 				bFlag = true;
-
+                completion.erase(completion.begin() + nIdx);
 				break;
 			}
 
-			itercompl++;
+			nIdx++;
 		}
 
 		if (bFlag == false)
 		{
 			answer = *iterParti;
-			break;
 		}
 	}
 
