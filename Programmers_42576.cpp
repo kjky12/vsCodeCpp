@@ -107,7 +107,7 @@ int main()
     
     string answer = "";
 
-    	sort(participant.begin(), participant.end());
+    sort(participant.begin(), participant.end());
 	sort(completion.begin(), completion.end());
 
 

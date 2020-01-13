@@ -94,6 +94,40 @@ int main()
     
     bool answer = true;
 
+    for (vector<string>::const_iterator iterPhon = phone_book.begin(); iterPhon != phone_book.end(); iterPhon++)
+    {
+        vector<string>::const_iterator iterPhon2 = iterPhon;
+        iterPhon2++;
+
+        for (iterPhon2; iterPhon2 != phone_book.end(); iterPhon2++)
+        {   
+            int n1 = iterPhon->length();
+            int n2 = iterPhon2->length();
+            
+            int n = -1;
+            if(n1 < n2)
+            {
+                n = iterPhon2->find(*iterPhon);
+            }
+            else
+            {
+                n = iterPhon->find(*iterPhon2);
+            }         
+
+            
+            
+            if(n == 0 )
+            {
+                answer = false;
+            }           
+
+        }
+
+        if(answer == false)
+            break;        
+    }
+    
+
 
 
     cout << answer << endl;
