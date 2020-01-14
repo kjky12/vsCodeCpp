@@ -11,6 +11,10 @@
 //! 백터 사용
 #include <vector>
 
+//! 큐 사용!
+#include <queue>
+
+
 using namespace std;
 
 /*
@@ -56,24 +60,19 @@ bridge_length	    weight	    truck_weights	                    return
 
 */
 
-struct ST_TRUCK_STATUS
-{
-    int nGo;
-    int nTruckWeights;
-};
-
 
 int main()
 {   
-   int bridge_length;
-   int weight;
+   int bridge_length = 0;
+   int weight = 0;
    vector<int> truck_weights;
    
   
 
     ///////////////////////////////////////////////
     //Case 1
-    
+    bridge_length = 2;
+    weight = 10;
     const int nTmp1 = 4;
     int naTmp1[nTmp1] = {7,4,5,6};
     truck_weights.assign(naTmp1, naTmp1+nTmp1);
@@ -106,16 +105,105 @@ int main()
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     
+    struct ST_TRUCK_BRIDGE
+    {
+        int nWeight;
+        int nBridgeLen;
+    };  
+
+    
+    queue<ST_TRUCK_BRIDGE> qTruck;
+    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
+    { 
+        ST_TRUCK_BRIDGE stTruckBridge;
+        stTruckBridge.nBridgeLen = bridge_length;
+        stTruckBridge.nWeight = *iterTmp;
+        qTruck.push(stTruckBridge);
+    }
+    
+    queue<int> qFinishBirdge;
+    queue<int> qCurrentBirdge;
+
     
 
+    int nTimeCnt = 0;
+    int nCurrentWeight = 0;
 
-    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
-    {   
-        ST_TRUCK_STATUS stTruckStatus;
+    ST_TRUCK_BRIDGE stTruckBridge = qTruck.front();
+    qCurrentBirdge.push(stTruckBridge.nWeight);
+    //nTimeCnt++;
+
+    while (true)
+    {
+        // stTruckBridge.nBridgeLen;
+        // stTruckBridge.nWeight;
+        
+
+        //! 현재 건너고 있는 트럭이 0인 경우 다음 트럭을!
+        if(stTruckBridge.nBridgeLen == 0)
+        {
+            nCurrentWeight -= stTruckBridge.nWeight;
+
+            qFinishBirdge.push(stTruckBridge.nWeight);
+
+
+            qTruck.pop();
+            stTruckBridge = qTruck.front();
+
+            continue;
+        }
+        else
+        {
+            //! 최초 트럭은 현재 건너는 중인 무게를 더해준다!
+            if(stTruckBridge.nBridgeLen == bridge_length)
+            {                
+                nCurrentWeight += stTruckBridge.nWeight;
+            }
+            
+        }
 
         
-        //nIdx--;
+
+        cout << nTimeCnt << "\tCurr : " << qCurrentBirdge.size() << "\tFin : " <<  qFinishBirdge.size() << "\tWait : " << qTruck.size() << endl;
+
+        if(qTruck.size() == 0)
+            break;
+
+        nTimeCnt++;
+        stTruckBridge.nBridgeLen--;
+
     }
+    
+    int aa = 0;
+
+    
+  
+    // int nTimeCnt = 0;
+
+    // bridge_length;
+    // weight;
+
+    // int nCurrentWeight = 0;
+    // for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
+    // {   
+    //     qCurrentBirdge.push(*iterTmp);
+    //     nCurrentWeight += *iterTmp;
+
+    //     for (size_t i = 0; i < bridge_length; i++)
+    //     {
+    //         nTimeCnt++;
+
+            
+
+    //     }
+        
+
+        
+
+        
+
+    //     //nIdx--;
+    // }
     
 
     return 0;

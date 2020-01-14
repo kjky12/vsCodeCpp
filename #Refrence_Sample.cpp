@@ -12,6 +12,9 @@
 //! 백터 사용
 #include <vector>
 
+//! 큐 사용!
+#include <queue>
+
 using namespace std;
 
 
