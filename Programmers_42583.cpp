@@ -80,15 +80,19 @@ int main()
 
     ////////////////////////////////////////////////
     //Case 2
-    // const int nTmp1 = 7;
-    // int naTmp1[nTmp1] = {3,9,9,3,5,7,2};
-    // heights.assign(naTmp1, naTmp1+nTmp1);
+    // bridge_length = 100;
+    // weight = 100;
+    // const int nTmp1 = 1;
+    // int naTmp1[nTmp1] = {10};
+    // truck_weights.assign(naTmp1, naTmp1+nTmp1);
 
     ////////////////////////////////////////////////
     //Case 3
-    // const int nTmp1 = 7;
-    // int naTmp1[nTmp1] = {1,5,3,6,7,6,5};
-    // heights.assign(naTmp1, naTmp1+nTmp1);
+    // bridge_length = 100;
+    // weight = 100;
+    // const int nTmp1 = 10;
+    // int naTmp1[nTmp1] = {10,10,10,10,10,10,10,10,10,10};
+    // truck_weights.assign(naTmp1, naTmp1+nTmp1);
 
  
     ////////////////////////////////////////////////
@@ -105,105 +109,72 @@ int main()
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     
-    struct ST_TRUCK_BRIDGE
-    {
-        int nWeight;
-        int nBridgeLen;
-    };  
 
-    
-    queue<ST_TRUCK_BRIDGE> qTruck;
-    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
-    { 
-        ST_TRUCK_BRIDGE stTruckBridge;
-        stTruckBridge.nBridgeLen = bridge_length;
-        stTruckBridge.nWeight = *iterTmp;
-        qTruck.push(stTruckBridge);
-    }
-    
-    queue<int> qFinishBirdge;
-    queue<int> qCurrentBirdge;
+    int answer = 0;
 
+    //! 도착한 트럭
+    queue<int> qFinish;
+    //! 다리위 트럭
+    queue<int> qBridge;
+    for (size_t i = 0; i < bridge_length; i++)
+        qBridge.push(-1);
     
-
-    int nTimeCnt = 0;
+    bridge_length;
+    weight;
     int nCurrentWeight = 0;
+    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); )
+    { 
+        int nPopValue = 0;
+        //! 다음 트럭 무게를 더햇는데 초과하면 가장 가까운 트럭을 보냄
+        while (nCurrentWeight + *iterTmp > weight)
+        {   
+            nPopValue = qBridge.front();
+            while (nPopValue == -1)
+            {
+                qBridge.push(-1);
+                qBridge.pop();   
 
-    ST_TRUCK_BRIDGE stTruckBridge = qTruck.front();
-    qCurrentBirdge.push(stTruckBridge.nWeight);
-    //nTimeCnt++;
+                nPopValue = qBridge.front();
 
-    while (true)
-    {
-        // stTruckBridge.nBridgeLen;
-        // stTruckBridge.nWeight;
-        
-
-        //! 현재 건너고 있는 트럭이 0인 경우 다음 트럭을!
-        if(stTruckBridge.nBridgeLen == 0)
-        {
-            nCurrentWeight -= stTruckBridge.nWeight;
-
-            qFinishBirdge.push(stTruckBridge.nWeight);
-
-
-            qTruck.pop();
-            stTruckBridge = qTruck.front();
-
-            continue;
-        }
-        else
-        {
-            //! 최초 트럭은 현재 건너는 중인 무게를 더해준다!
-            if(stTruckBridge.nBridgeLen == bridge_length)
-            {                
-                nCurrentWeight += stTruckBridge.nWeight;
+                answer++;
             }
-            
+
+            //! Pop된 데이터가 0초과의 경우 현재 무게를 빼준다!
+            nCurrentWeight -= nPopValue;                
+            if(nPopValue > 0)
+            {
+                qFinish.push(nPopValue);
+            }
         }
 
+        nCurrentWeight += *iterTmp;        
+
+        qBridge.push(*iterTmp);
+        qBridge.pop();
+        answer++;
         
-
-        cout << nTimeCnt << "\tCurr : " << qCurrentBirdge.size() << "\tFin : " <<  qFinishBirdge.size() << "\tWait : " << qTruck.size() << endl;
-
-        if(qTruck.size() == 0)
-            break;
-
-        nTimeCnt++;
-        stTruckBridge.nBridgeLen--;
-
+        iterTmp++;      
     }
-    
-    int aa = 0;
 
-    
-  
-    // int nTimeCnt = 0;
 
-    // bridge_length;
-    // weight;
+    answer += qBridge.size();
 
-    // int nCurrentWeight = 0;
-    // for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
-    // {   
-    //     qCurrentBirdge.push(*iterTmp);
-    //     nCurrentWeight += *iterTmp;
+    // //! 다음이 없는데 큐가 다 안끝나고 트럭이 전부 건너지 못하는 경우
+    //  while(qBridge.size() > 0)
+    //  {
+    //      qBridge.pop();
+    //      nPopValue = qBridge.front();
 
-    //     for (size_t i = 0; i < bridge_length; i++)
+    //      answer++;
+
+    //     if(nPopValue > 0)
     //     {
-    //         nTimeCnt++;
-
-            
-
+    //         break;
     //     }
-        
+    //  }
 
-        
 
-        
 
-    //     //nIdx--;
-    // }
     
 
     return 0;
