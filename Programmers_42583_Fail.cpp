@@ -71,11 +71,11 @@ int main()
 
     ///////////////////////////////////////////////
     //Case 1
-    bridge_length = 2;
-    weight = 10;
-    const int nTmp1 = 4;
-    int naTmp1[nTmp1] = {7,4,5,6};
-    truck_weights.assign(naTmp1, naTmp1+nTmp1);
+    // bridge_length = 2;
+    // weight = 10;
+    // const int nTmp1 = 4;
+    // int naTmp1[nTmp1] = {7,4,5,6};
+    // truck_weights.assign(naTmp1, naTmp1+nTmp1);
 
 
     ////////////////////////////////////////////////
@@ -88,11 +88,11 @@ int main()
 
     ////////////////////////////////////////////////
     //Case 3
-    // bridge_length = 100;
-    // weight = 100;
-    // const int nTmp1 = 10;
-    // int naTmp1[nTmp1] = {10,10,10,10,10,10,10,10,10,10};
-    // truck_weights.assign(naTmp1, naTmp1+nTmp1);
+    bridge_length = 100;
+    weight = 100;
+    const int nTmp1 = 10;
+    int naTmp1[nTmp1] = {10,10,10,10,10,10,10,10,10,10};
+    truck_weights.assign(naTmp1, naTmp1+nTmp1);
 
  
     ////////////////////////////////////////////////
@@ -121,54 +121,94 @@ int main()
     //! 다리위 값
     queue<int> qBridge;
     for (size_t i = 0; i < bridge_length; i++)
-        qBridge.push(-1);
+        qBridge.push(0);
     
     bridge_length;
     weight;
     int nCurrentWeight = 0;
+     
+    int nNextTruckWeight = 0;
 
 
+    
     //while (!qInput.empty() || qFinish.size() != truck_weights.size())
+    bool bFalg = true;
     while (qFinish.size() != truck_weights.size())
-    {
-
-        //7, 4, 5, 6순으로 출력됨!
-        //cout << qInput.front() << endl;
-        // qInput.pop();
-        int nTruckWeight = 0;
-        if(!qInput.empty())
-            nTruckWeight = qInput.front();
-
-        if(nCurrentWeight + nTruckWeight > weight || qInput.empty()) //! 크기가 넘어서면 -1값을 입력해줌
+    {       
+        ///다음꺼 올리기! 
+        if(bFalg == true)
         {
-            qBridge.push(-1);
-
-            int nOutValue = qBridge.front();
-            
-            if(nOutValue > 0)
+            nNextTruckWeight = qInput.front();
+            if(nCurrentWeight + nNextTruckWeight > weight)
             {
-                nCurrentWeight -= nOutValue;
-                qFinish.push(nOutValue);
-            }         
+                qBridge.push(0); 
+            }
+            else
+            {
+                nCurrentWeight += nNextTruckWeight;
+                qInput.pop();
+                qBridge.push(nNextTruckWeight);           
                 
-        }
-        else                                        //! 크기가 되면 다음 트럭 무게를 넣어줌
-        {
-            qBridge.push(nTruckWeight);            
-            nCurrentWeight += nTruckWeight;
-            qInput.pop();
-        }
+            }
+            
+            qBridge.pop();
+            
+            if(!qInput.empty())
+                nNextTruckWeight = qInput.front();
+            else
+                nNextTruckWeight = 0;
 
-        qBridge.pop();
-        answer++;
+
+            bFalg = false;
+
+            answer++;
+
+            continue;
+        }
 
         cout << "TI:"<< answer << "\t" << ends;
-        cout << "FI:"<< qFinish.size() << "\t" << ends;
-        cout << "IN:"<< qBridge.size() << "\t" << ends;
-        cout << "WA:"<< qInput.size() << "\t" << endl;        
+        cout << "FI:"<< qFinish.size() << "\t" << ends;        
+        cout << "IN:"<< qBridge.front() << "," <<qBridge.back() << "\t" << ends;
+        cout << "WA:"<< qInput.size() << "\t" << ends;    
+        cout << "Weig:"<< nCurrentWeight << "\t" << endl;    
+
+        
+        if(nCurrentWeight + nNextTruckWeight > weight || qInput.empty()) //! 크기가 넘어서면 -1값을 입력해줌
+        {
+            int nOutValue = qBridge.front();
+            if(nOutValue > 0)
+            {
+                qFinish.push(nOutValue);
+
+                nCurrentWeight -= nOutValue;
+
+                bFalg = true;
+
+            }
+            else
+            {
+                //!확인후 빼줌!
+                qBridge.pop();
+                qBridge.push(0);
+                answer++;
+            }
+        }
+        else
+        {
+            bFalg = true;
+        }
+        
+
+
     }
     
+    answer++;
 
+    cout << "====FI====" << endl;     
+    cout << "TI:"<< answer << "\t" << ends;
+    cout << "FI:"<< qFinish.size() << "\t" << ends;
+    cout << "IN:"<< qBridge.size() << "\t" << ends;
+    cout << "WA:"<< qInput.size() << "\t" << endl;     
     int a= 0;
 
     // for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); )
