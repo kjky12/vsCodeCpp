@@ -114,7 +114,11 @@ int main()
 
     //! 도착한 트럭
     queue<int> qFinish;
-    //! 다리위 트럭
+    //! 입력될 트럭!
+    queue<int> qInput;
+    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); iterTmp++)
+        qInput.push(*iterTmp);
+    //! 다리위 값
     queue<int> qBridge;
     for (size_t i = 0; i < bridge_length; i++)
         qBridge.push(-1);
@@ -122,42 +126,99 @@ int main()
     bridge_length;
     weight;
     int nCurrentWeight = 0;
-    for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); )
-    { 
-        int nPopValue = 0;
-        //! 다음 트럭 무게를 더햇는데 초과하면 가장 가까운 트럭을 보냄
-        while (nCurrentWeight + *iterTmp > weight)
-        {   
-            nPopValue = qBridge.front();
-            while (nPopValue == -1)
+
+
+    //while (!qInput.empty() || qFinish.size() != truck_weights.size())
+    while (qFinish.size() != truck_weights.size())
+    {
+
+        //7, 4, 5, 6순으로 출력됨!
+        //cout << qInput.front() << endl;
+        // qInput.pop();
+        int nTruckWeight = 0;
+        if(!qInput.empty())
+            nTruckWeight = qInput.front();
+
+        if(nCurrentWeight + nTruckWeight > weight || qInput.empty()) //! 크기가 넘어서면 -1값을 입력해줌
+        {
+            qBridge.push(-1);
+
+            int nOutValue = qBridge.front();
+            
+            if(nOutValue > 0)
             {
-                qBridge.push(-1);
-                qBridge.pop();   
-
-                nPopValue = qBridge.front();
-
-                answer++;
-            }
-
-            //! Pop된 데이터가 0초과의 경우 현재 무게를 빼준다!
-            nCurrentWeight -= nPopValue;                
-            if(nPopValue > 0)
-            {
-                qFinish.push(nPopValue);
-            }
+                nCurrentWeight -= nOutValue;
+                qFinish.push(nOutValue);
+            }         
+                
+        }
+        else                                        //! 크기가 되면 다음 트럭 무게를 넣어줌
+        {
+            qBridge.push(nTruckWeight);            
+            nCurrentWeight += nTruckWeight;
+            qInput.pop();
         }
 
-        nCurrentWeight += *iterTmp;        
-
-        qBridge.push(*iterTmp);
         qBridge.pop();
         answer++;
-        
-        iterTmp++;      
+
+        cout << "TI:"<< answer << "\t" << ends;
+        cout << "FI:"<< qFinish.size() << "\t" << ends;
+        cout << "IN:"<< qBridge.size() << "\t" << ends;
+        cout << "WA:"<< qInput.size() << "\t" << endl;        
     }
+    
+
+    int a= 0;
+
+    // for (vector<int>::const_iterator iterTmp = truck_weights.begin(); iterTmp != truck_weights.end(); )
+    // { 
+    //     nCurrentWeight += *iterTmp;
+    //     iterTmp++;  
+
+    //     int nPopValue = -2;
+    //     //! 다음 트럭 무게를 더햇는데 초과하면 가장 가까운 트럭을 보냄
+    //     while (nCurrentWeight + *iterTmp > weight)
+    //     {   
+    //         nPopValue = qBridge.front();
+    //         //! 다리에 트럭이 없는경우 다시 한칸
+    //         while (nPopValue == -1)
+    //         {
+    //             qBridge.push(-1);
+    //             qBridge.pop();   
+
+    //             nPopValue = qBridge.front();
+
+    //             answer++;
+    //         }
+
+    //         //! Pop된 데이터가 0초과의 경우 현재 무게를 빼준다!
+    //         nCurrentWeight -= nPopValue;                
+    //         if(nPopValue > 0)
+    //         {
+    //             qFinish.push(nPopValue);
+
+    //             nCurrentWeight += *iterTmp;
+    //             iterTmp++;
+    //         }
+    //     }
+
+    //     // if(nPopValue == -2)
+    //     // {
+    //     //     answer++;
+    //     // }
+
+    //     // nCurrentWeight += *iterTmp;        
+
+    //     // qBridge.push(*iterTmp);
+    //     // qBridge.pop();
+    //     // answer++;
+        
+    //     // iterTmp++;      
+    // }
 
 
-    answer += qBridge.size();
+    // answer += qBridge.size();
 
     // //! 다음이 없는데 큐가 다 안끝나고 트럭이 전부 건너지 못하는 경우
     //  while(qBridge.size() > 0)
