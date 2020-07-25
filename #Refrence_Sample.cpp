@@ -39,6 +39,26 @@ void 초기_데이터_만들기()
     {
         cout << participant[i] << endl;        
     }
+
+
+
+    //! vector 복사!!
+
+    vector<int> scoville;
+   
+    ///////////////////////////////////////////////
+    //Case 1
+    const int nTmp3 = 6;
+    int naTmp3[nTmp3] = {1, 2, 3, 9, 10, 12};
+    scoville.assign(naTmp3, naTmp3+nTmp3);
+
+    sort(scoville.begin(), scoville.end(), greater<int>());
+    //=>12, 10, 9, 3, 2, 1 내림차순
+
+    sort(scoville.begin(), scoville.end(), less<int>());
+    //=>1,2,3,9,10,12 오름차순
+
+
 }
 
 

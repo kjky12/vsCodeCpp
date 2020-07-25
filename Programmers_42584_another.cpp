@@ -15,11 +15,12 @@
 //! 큐 사용!
 #include <queue>
 
+#include <stack>
+
+
 using namespace std;
 
 /*
-
-URL : https://programmers.co.kr/learn/courses/30/lessons/42584
 
 문제 설명
 초 단위로 기록된 주식가격이 담긴 배열 prices가 매개변수로 주어질 때, 가격이 떨어지지 않은 기간은 몇 초인지를 return 하도록 solution 함수를 완성하세요.
@@ -60,53 +61,23 @@ int main()
     prices.assign(naTmp1, naTmp1+nTmp1);
 
 
-
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    ////////////////////////////////////////////////
-    
-    vector<int> answer;
-    answer.resize(prices.size());
-
-    int nIdx = 0;
-    for (vector<int>::const_iterator iterTmp = prices.begin(); iterTmp != prices.end(); iterTmp++)
+    vector<int> answer(prices.size());
+    stack<int> s;
+    int size = prices.size();
+    for(int i=0;i<size;i++)
     {   
-        int nTmp1 = *iterTmp;
-        vector<int>::const_iterator iterTmp2 = iterTmp;
-        iterTmp2++;
-        
-        int nIdxCnt = 0;
-        bool bFlag = false;
-        for (; iterTmp2 != prices.end(); iterTmp2++)
-        {   
-            nIdxCnt++;
-
-            int nTmp2 = *iterTmp2;
-            
-            if(nTmp1 > nTmp2)
-            {
-                answer[nIdx] = nIdxCnt;
-                bFlag = true;
-                break;
-            }
-        }
-
-        if(bFlag == false)
+        while(!s.empty() && prices[s.top()]>prices[i])
         {
-            answer[nIdx] = nIdxCnt;
+            answer[s.top()] = i-s.top();
+            s.pop();
         }
-
-        nIdx++;
+        s.push(i);
     }
-    
-    for (size_t i = 0; i < answer.size(); i++)
-    {
-        cout << answer[i] << "," << ends;
+    while(!s.empty()){
+        answer[s.top()] = size-s.top()-1;
+        s.pop();
     }
 
-    int b = 0;
-    
 
     return 0;
 }
